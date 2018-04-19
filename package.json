@@ -1,0 +1,15 @@
+{
+  "name": "team-sound",
+  "version": "1.0.0",
+  "description": "final project for network everything spring 2018 uwu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mateo Abdullah and Ah Ram",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^6.2.0",
+    "tone": "^0.12.80"
+  }
+}
