@@ -1,5 +1,0 @@
-let foo = () => {
-
-}
-
-export {foo}
