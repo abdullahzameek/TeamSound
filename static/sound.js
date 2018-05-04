@@ -73,22 +73,25 @@ let s = new Sound()
 let socket = io.connect('http://localhost:5000/', {reconnect: true})
 
 socket.on('sound', (data) => {
+  console.log('boop')
   data = data.trim();
   s.push(parseFloat(data))
 })
 
 document.addEventListener('DOMContentLoaded', function (e) {
   //s.randomNote()
+  //socket.emit('browser-connect', 'floop')
+
   s.play(3)
-  // setInterval(() => {
-  //   s.avg((a) => {
-  //     s.play(Math.round(a) % s.notes.length)
-  //   })
-  // }, 1000)
   setInterval(() => {
-    s.threshold(5, (a) => {
-      console.log(a)
-      s.play(Math.round(a)*5 % s.notes.length)
+    s.avg((a) => {
+      s.play(Math.round(a) % s.notes.length)
     })
-  }, 100)
+  }, 1000)
+  // setInterval(() => {
+  //   s.threshold(100, (a) => {
+  //     console.log(a)
+  //     s.play(Math.round(a)*5 % s.notes.length)
+  //   })
+  // }, 100)
 });

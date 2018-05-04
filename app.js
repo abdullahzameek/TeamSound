@@ -26,14 +26,21 @@ const server = app.listen(port, () => console.log(`Server listening on port ${po
 // sockets
 
 const io = require('socket.io').listen(server);
+let servers = [];
 let browser = null;
 
 io.on('connection', (socket) => {
   console.log('boop')
 })
 
-io.on('browser connect', (socket) => {
+io.on('browser-connect', (socket) => {
+  console.log(`${socket}: browser connected`)
   browser = socket;
+})
+
+io.on('server connect', (socket) => {
+  console.log(`${socket}: server connected`)
+  servers.push(socket)
 })
 
 io.on('sound', (socket, data) => {
