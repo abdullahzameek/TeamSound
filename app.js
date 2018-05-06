@@ -1,23 +1,33 @@
+let args = process.argv.slice(2)
+
 const serial = require('serialport')
-const portName = process.argv[2]
+const portName = args[3] || 'COM6'
 const sPort = new serial(portName, 9600)
 const parser = new serial.parsers.Readline()
 sPort.pipe(parser)
 
+const Request = require('request')
+const bp = require('body-parser')
+
 const express = require('express')
 const app = express()
-const port = 5000
+const ip = args[0] || 'localhost'
+const port = args[1] || 5000
+const target = args[2] || 'localhost:5050'
 
 app.set('view engine', 'pug')
 app.use('/static', express.static(__dirname + '/static'))
 app.use('/tone', express.static(__dirname + '/node_modules/tone/build'))
+app.use(bp.urlencoded({extended: false}))
+app.use(bp.json())
 
 app.get('/', (cReq, cRes) => {
-  cRes.render('index')
+  cRes.render('index', {ip: ip, port: port})
 })
 
-app.get('/boop', (cReq, cRes) => {
-  boop()
+app.post('/boop', (cReq, cRes) => {
+  let num = cReq.body.number
+  io.emit('sound', num)
   cRes.send('hi')
 })
 
@@ -57,7 +67,19 @@ const boop = () => {
 
 const readSerial = (data) => {
   //console.log(data)
-  io.emit('sound', data)
+  //io.emit('sound', data)
+  console.log('posting...')
+  let url = `http://${target}/boop`
+  let jData = {
+    number: data
+  }
+  Request.post({
+    url: url,
+    json: true,
+    body: jData
+  }, (err, res, body) => {
+    console.log(body)
+  })
 }
 
 sPort.on('open', () => {
