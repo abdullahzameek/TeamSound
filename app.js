@@ -67,7 +67,7 @@ const boop = () => {
 
 const readSerial = (data) => {
   //console.log(data)
-  //io.emit('sound', data)
+  io.emit('sound', data)
   console.log('posting...')
   let url = `http://${target}/boop`
   let jData = {
