@@ -19,4 +19,4 @@ Furthermore, if we added more sockets, we could have had multiple receivers so w
 Block diagram can be found here
 
 
-![alt text](https://image.ibb.co/n09LTy/20180512_161133.jpg)
+![alt text](https://image.ibb.co/jM4yFd/20180512_161133.jpg)
